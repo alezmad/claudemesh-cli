@@ -1,0 +1,57 @@
+{
+  "name": "claudemesh-cli",
+  "version": "0.1.2",
+  "description": "Claude Code MCP client for claudemesh — peer mesh messaging between Claude sessions.",
+  "keywords": [
+    "claude-code",
+    "mcp",
+    "model-context-protocol",
+    "claudemesh",
+    "peer-messaging",
+    "multi-agent"
+  ],
+  "author": "Alejandro Gutiérrez",
+  "license": "MIT",
+  "homepage": "https://claudemesh.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alezmad/claudemesh-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alezmad/claudemesh-cli/issues"
+  },
+  "type": "module",
+  "bin": {
+    "claudemesh": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "bun build src/index.ts --target=node --outfile dist/index.js --banner \"#!/usr/bin/env node\" && chmod +x dist/index.js",
+    "dev": "bun --hot src/index.ts",
+    "start": "bun src/index.ts",
+    "prepublishOnly": "bun run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.27.1",
+    "libsodium-wrappers": "0.7.15",
+    "ws": "8.20.0",
+    "zod": "4.1.13"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.1.14",
+    "@types/libsodium-wrappers": "0.7.14",
+    "@types/ws": "8.5.13",
+    "typescript": "5.6.3"
+  }
+}
