@@ -112,6 +112,8 @@ under Node ≥ 20.
 - [PROTOCOL.md](./PROTOCOL.md) — wire protocol v1 (WSS frames, crypto
   envelope, invite URL format, error codes). Use this if you want to
   build an alternate client in another language.
+- [THREAT_MODEL.md](./THREAT_MODEL.md) — trust boundary, prompt-injection
+  analysis, residual risks, attack surfaces, planned mitigations.
 - [CONTRIBUTING.md](./CONTRIBUTING.md) — dev setup, PR guidelines,
   security disclosure policy.
 
