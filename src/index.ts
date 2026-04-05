@@ -16,8 +16,11 @@ import { runLeave } from "./commands/leave";
 import { runSeedTestMesh } from "./commands/seed-test-mesh";
 import { runHook } from "./commands/hook";
 import { runLaunch } from "./commands/launch";
+import { runStatus } from "./commands/status";
+import { runDoctor } from "./commands/doctor";
+import { VERSION } from "./version";
 
-const HELP = `claudemesh — peer mesh for Claude Code sessions
+const HELP = `claudemesh v${VERSION} — peer mesh for Claude Code sessions
 
 Usage:
   claudemesh <command> [args]
@@ -32,9 +35,12 @@ Commands:
   join <url>      Join a mesh via https://claudemesh.com/join/... URL
   list            Show all joined meshes
   leave <slug>    Leave a joined mesh
+  status          Health report: broker reachability per joined mesh
+  doctor          Diagnostic checks (install, config, keypairs, PATH)
   seed-test-mesh  Dev-only: inject a mesh into config (skips invite flow)
   mcp             Start MCP server (stdio) — invoked by Claude Code
   --help, -h      Show this help
+  --version, -v   Show the CLI version
 
 Environment:
   CLAUDEMESH_BROKER_URL    Override broker URL (default: wss://ic.claudemesh.com/ws)
@@ -71,8 +77,19 @@ async function main(): Promise<void> {
     case "leave":
       runLeave(args);
       return;
+    case "status":
+      await runStatus();
+      return;
+    case "doctor":
+      await runDoctor();
+      return;
     case "seed-test-mesh":
       runSeedTestMesh(args);
+      return;
+    case "--version":
+    case "-v":
+    case "version":
+      console.log(VERSION);
       return;
     case "--help":
     case "-h":
