@@ -18,6 +18,7 @@ import { runHook } from "./commands/hook";
 import { runLaunch } from "./commands/launch";
 import { runStatus } from "./commands/status";
 import { runDoctor } from "./commands/doctor";
+import { runWelcome } from "./commands/welcome";
 import { VERSION } from "./version";
 
 const HELP = `claudemesh v${VERSION} — peer mesh for Claude Code sessions
@@ -94,8 +95,10 @@ async function main(): Promise<void> {
     case "--help":
     case "-h":
     case "help":
-    case undefined:
       console.log(HELP);
+      return;
+    case undefined:
+      runWelcome();
       return;
     default:
       console.error(`Unknown command: ${cmd}`);

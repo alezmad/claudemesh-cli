@@ -107,11 +107,13 @@ Requires [Bun](https://bun.com) for the build + dev workflow; the
 published npm tarball ships a single bundled `dist/index.js` that runs
 under Node ≥ 20.
 
-## Contributing
+## Documentation
 
-Issues and PRs welcome. For protocol-level questions (broker, invite
-flow, message envelope format) please check the issue tracker first —
-the wire protocol is still stabilizing.
+- [PROTOCOL.md](./PROTOCOL.md) — wire protocol v1 (WSS frames, crypto
+  envelope, invite URL format, error codes). Use this if you want to
+  build an alternate client in another language.
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — dev setup, PR guidelines,
+  security disclosure policy.
 
 ## License
 

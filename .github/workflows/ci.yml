@@ -7,11 +7,39 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install
       - run: bun run build
-      - name: verify help output
+
+      - name: verify --help includes launch subcommand
+        if: runner.os != 'Windows'
         run: ./dist/index.js --help | grep -q "launch \[args\]"
+
+      - name: verify --help includes launch subcommand (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $output = node ./dist/index.js --help
+          if ($output -notmatch "launch \[args\]") { exit 1 }
+
+      - name: verify --version output
+        if: runner.os != 'Windows'
+        run: |
+          expected=$(node -e "console.log(require('./package.json').version)")
+          actual=$(./dist/index.js --version)
+          test "$expected" = "$actual" || (echo "mismatch: pkg=$expected bin=$actual" && exit 1)
+
+      - name: verify --version output (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $expected = node -e "console.log(require('./package.json').version)"
+          $actual = node ./dist/index.js --version
+          if ($expected -ne $actual) { Write-Error "mismatch: pkg=$expected bin=$actual"; exit 1 }
